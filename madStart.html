@@ -1,0 +1,169 @@
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>start</title>
+  <style media="screen">
+    *{
+      /* border: 1px solid red; */
+    }
+    body {
+      background-color: rgb(205, 142, 86);
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+      color: rgb(33, 50, 111);
+      font-family: sans-serif;
+    }
+    div {
+      padding: 2em;
+      background-color: rgb(65, 140, 237);
+      width: 60%;
+      /* margin-bottom: 1em; */
+    }
+    p {
+      padding: 1em;
+      font-size: 2em;
+      background-color: rgb(57, 218, 152);
+    }
+    button {
+      background-color: rgb(169, 26, 181);
+      color: white;
+      width: 30%;
+      font-size: 1.5em;
+      border-radius: 2em;
+      padding: 0.5em;
+      margin-top: 1em;
+      cursor: pointer;
+    }
+    input {
+      font-size: inherit;
+    }
+    .displayBlock { display: block;}
+    .displayNone { display: none;}
+    #warning { background-color: red;}
+    #outputPanel {background-color: rgb(42, 144, 129);}
+  </style>
+</head>
+
+<body>
+  <div id="inputPanel">
+    <h3>A few questions for you</h3>
+    <p>A first name:
+      <input id="firstName" type="text" placeholder="first name">
+    </p>
+    <p>Your favorite color:
+      <input id="favColor" type="text" placeholder="favorite color">
+    </p>
+    <p>Somewhere to visit:
+      <input id="place" type="text" placeholder="place">
+    </p>
+    <button id="submit">Submit your answers</button>
+    <p id="warning">Please answer all questions.</p>
+
+  </div>
+  <div id="outputPanel">
+    <p>Your story....</p>
+    <p id="theStory"></p>
+    <p id="theStory2"></p>
+    <p id="theStory3"></p>
+    <button id="again">Again?</button>
+  </div>
+  <script>
+  //variables to hold references to markup elements
+  let inputPanel = document.querySelector('#inputPanel')
+  let outputPanel = document.querySelector('#outputPanel')
+  let warning = document.querySelector('#warning')
+  let submit = document.querySelector('#submit')
+  let again = document.querySelector('#again')
+
+  let firstName = document.querySelector('#firstName')
+  let favColor = document.querySelector('#favColor')
+  let place = document.querySelector('#place')
+
+  let theStory = document.querySelector('#theStory')
+  let theStory2 = document.querySelector('#theStory2')
+  let theStory3 = document.querySelector('#theStory3')
+  // submit.style.cursor = "cell"
+  //button event listeners
+  // submit.addEventListener('click', writeStory, false)
+  submit.addEventListener('click', checkComplete, false)
+  again.addEventListener('click', resetPage, false)
+
+  window.addEventListener('keydown', keyDownHandler, false)
+
+  outputPanel.className = "displayNone"
+  warning.className = "displayNone"
+  firstName.focus()
+
+  //action functions
+  function keyDownHandler(evt){
+    //do something when the enter key is pressed
+    //enter key is keycode 13
+    console.log(evt.keyCode);
+    if (evt.keyCode == 13){
+      console.log('enter pressed');
+      checkComplete()
+
+    }
+  }
+
+    function checkComplete() {
+      //verify the user filled in the form
+      if (firstName.value == ""){
+        warning.textContent = "Please provide a name."
+        warning.className = "displayBlock"
+      } else if (favColor.value == ""){
+        warning.textContent = "Please tell me your favorite color."
+        warning.className = "displayBlock"
+      } else if (place.value == "") {
+        warning.textContent = "Please provide a location."
+        warning.className = "displayBlock"
+      } else {
+        writeStory()
+      }
+    }
+
+    function writeStory() {
+      //grab the input values to write the story
+      console.log("write story");
+      let finishedStory1 = ""
+      let finishedStory2 = ""
+      let finishedStory3 = ""
+
+      finishedStory1 += "Welcome, " + firstName.value + ". "
+      finishedStory1 += "I bet you are a nice person, " + firstName.value + "."
+
+      finishedStory2 += "Why do you like the color " + favColor.value + "? "
+
+      finishedStory3 += "I hear " + place.value + " is a nice spot to visit."
+
+      theStory.textContent = finishedStory1
+      theStory2.textContent = finishedStory2
+      theStory3.textContent = finishedStory3
+
+      inputPanel.className = "displayNone"
+      outputPanel.className = "displayBlock"
+      // again.focus()
+    }
+
+    function resetPage() {
+      //put stuff here to reset the page so the user can try again
+      console.log("reset page");
+      inputPanel.className = "displayBlock"
+      outputPanel.className = "displayNone"
+      warning.className = "displayNone"
+
+      firstName.value = ""
+      favColor.value = ""
+      place.value = ""
+    }
+  </script>
+</body>
+
+
+
+
+
+</html>
